@@ -18,9 +18,9 @@ composer require hiotech/paysortaphp
 ```php
 use Hiotech\PaysortaPhp\Payment;
 
-$payment = new Payment();
+$payment = new Payment($secretkey);
 
-$response = $payment->redirectToCheckout($secretkey,[
+$response = $payment->redirectToCheckout([
     'firstName' => 'john',
     'lastName'  => 'Doe',
     'email'  => 'customer@example.com',
@@ -37,7 +37,7 @@ $response = $payment->redirectToCheckout($secretkey,[
 ### Redirect straight to checkout
 
 ```php
-$response = $payment->redirectToCheckout($secretkey,[
+$response = $payment->redirectToCheckout([
     'firstName' => 'john',
     'lastName'  => 'Doe',
     'email'        => 'customer@example.com', // required
@@ -55,7 +55,7 @@ $response = $payment->redirectToCheckout($secretkey,[
 After the customer returns from checkout, verify the payment by its reference:
 
 ```php
-$result = $payment->verifyPaymentCheckout($secretkey,'PSA_7cdc78f8d732fdb9');
+$result = $payment->verifyPaymentCheckout('PSA_7cdc78f8d732fdb9');
 ```
 
 

@@ -6,13 +6,19 @@ use Hiotech\PaysortaPhp\Exceptions\PaysortaException;
 
 class Payment extends Client
 {
-    
+    protected string $secretkey;
+
+    public function __construct(string $secretkey, ?string $baseUrl = null)
+    {
+        parent::__construct($secretkey, $baseUrl);
+        $this->secretkey = $secretkey;
+    }
 
     /**
      * Initiate a payment. Required: email, amount. Optional: currency, reference,
      * callback_url, metadata. A reference is generated when one isn't supplied.
      */
-    public function initiate(string $secretkey, array $data): array
+    public function initiate(array $data): array
     {
         if (!isset($data['email']) || empty($data['email'])) {
             throw new PaysortaException('email is required to initiate a payment.');
@@ -33,7 +39,7 @@ class Payment extends Client
         $data['reference'] ??= $this->generateReference();
         $data['currency'] ??= 'NGN';
 
-        $client = new Client($secretkey);
+        $client = new Client($this->secretkey);
 
         return $client->post('/collection/process/transaction-initialization', $data);
     } 
@@ -41,9 +47,9 @@ class Payment extends Client
     /**
      * Initiate a payment and return the hosted checkout URL to send the customer to.
      */
-    public function getCheckoutUrl(string $secretkey, array $data): string
+    public function getCheckoutUrl(array $data): string
     {
-        $response = $this->initiate($secretkey,$data);
+        $response = $this->initiate($data);
         $url = $response['data']['paymentURL'] ?? null;
 
         if (!$url) {
@@ -56,9 +62,9 @@ class Payment extends Client
     /**
      * Initiate a payment and redirect the browser straight to the hosted checkout page.
      */
-    public function redirectToCheckout(string $secretkey, array $data): void
+    public function redirectToCheckout(array $data): void
     {
-        $authorizeurl = $this->getCheckoutUrl($secretkey,$data);
+        $authorizeurl = $this->getCheckoutUrl($data);
 
         header('Location: ' . $authorizeurl);
         exit;
@@ -69,7 +75,7 @@ class Payment extends Client
      */
     public  function verifyPaymentCheckout(string $secretkey, string $reference): array
     {
-        $client = new Client($secretkey);
+        $client = new Client($this->secretkey);
         return $client->get('/transaction-verification?ref=' . rawurlencode($reference));
     }
 
