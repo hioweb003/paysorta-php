@@ -20,7 +20,7 @@ use Hiotech\PaysortaPhp\Payment;
 
 $payment = new Payment();
 
-$response = $payment->redirectToCheckout("TSK_784cxuh478cg4cy4gr4",[
+$response = $payment->redirectToCheckout($secretkey,[
     'firstName' => 'john',
     'lastName'  => 'Doe',
     'email'  => 'customer@example.com',
@@ -37,7 +37,7 @@ $response = $payment->redirectToCheckout("TSK_784cxuh478cg4cy4gr4",[
 ### Redirect straight to checkout
 
 ```php
-$response = $payment->redirectToCheckout("TSK_784cxuh478cg4cy4gr4",[
+$response = $payment->redirectToCheckout($secretkey,[
     'firstName' => 'john',
     'lastName'  => 'Doe',
     'email'        => 'customer@example.com', // required
