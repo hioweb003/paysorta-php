@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
-        'name' => 'hiotech/paysorta-php',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'name' => 'hiotech/paysortaphp',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '27272f08a4cb1c9cc80f6b737707e390829c45dd',
         'type' => 'package',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -46,10 +46,10 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'hiotech/paysorta-php' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+        'hiotech/paysortaphp' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '27272f08a4cb1c9cc80f6b737707e390829c45dd',
             'type' => 'package',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
