@@ -73,7 +73,7 @@ class Payment extends Client
     /**
      * Verify a transaction by its reference after the customer returns from checkout.
      */
-    public  function verifyPaymentCheckout(string $secretkey, string $reference): array
+    public  function verifyPaymentCheckout(string $reference): array
     {
         $client = new Client($this->secretkey);
         return $client->get('/transaction-verification?ref=' . rawurlencode($reference));
