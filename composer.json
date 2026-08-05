@@ -1,0 +1,33 @@
+{
+    "name": "hiotech/paysorta-php",
+    "description": "php package for paysorta",
+    "type": "package",
+     "keywords": [
+        "php",
+        "github",
+        "laravel",
+        "Open Source",
+        "payments",
+        "subscription",
+        "paysorta",
+        "paysorta.com"
+    ],
+    "license": "mit",
+    "autoload": {
+        "psr-4": {
+            "Hiotech\\PaysortaPhp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "hiotech",
+            "email": "henryifeanyi48@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php":"^8.0|^8.1|^8.2|^8.3|^8.5|^8.6",
+        "guzzlehttp/guzzle": "^8.0",
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
