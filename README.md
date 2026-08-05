@@ -5,7 +5,7 @@ PHP SDK for [Paysorta](https://paysorta.com) — initiate payments, generate hos
 ## Installation
 
 ```bash
-composer require hiotech/paysorta-php
+composer require hiotech/paysortaphp
 ```
 
 ## Requirements
