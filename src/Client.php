@@ -23,7 +23,12 @@ class Client
             self::$envLoaded = true;
         }
 
-        $baseUri = $baseUrl ?: (str_starts_with($apiSecret, 'sk_') ? self::env('PAYSORTA_BASE_URL') : self::env('PAYSORTA_TEST_BASE_URL'));
+        $config = require __DIR__ . '/../config/paysorta.php';
+        $isLive = str_starts_with($apiSecret, 'sk_');
+
+        $baseUri = $baseUrl
+            ?: ($isLive ? self::env('PAYSORTA_BASE_URL') : self::env('PAYSORTA_TEST_BASE_URL'))
+            ?: ($isLive ? $config['base_url'] : $config['test_base_url']);
 
         if (! $baseUri) {
             throw new PaysortaException('Paysorta base URL is not set. Pass it explicitly or define PAYSORTA_BASE_URL.');
