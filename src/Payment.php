@@ -4,14 +4,9 @@ namespace Hiotech\PaysortaPhp;
 
 use Hiotech\PaysortaPhp\Exceptions\PaysortaException;
 
-class Payment
+class Payment extends Client
 {
-    protected Client $client;
-
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
-    }
+    
 
     /**
      * Initiate a payment. Required: email, amount. Optional: currency, reference,
@@ -38,9 +33,9 @@ class Payment
         $data['reference'] ??= $this->generateReference();
         $data['currency'] ??= 'NGN';
 
-        new client($secretkey);
+        $client = new Client($secretkey);
 
-        return $this->client->post('/collection/process/transaction-initialization', $data);
+        return $client->post('/collection/process/transaction-initialization', $data);
     } 
 
     /**
@@ -74,8 +69,8 @@ class Payment
      */
     public  function verifyPaymentCheckout(string $secretkey, string $reference): array
     {
-        new client($secretkey);
-        return $this->client->get('/transaction-verification?ref=' . rawurlencode($reference));
+        $client = new Client($secretkey);
+        return $client->get('/transaction-verification?ref=' . rawurlencode($reference));
     }
 
     protected function generateReference(): string
