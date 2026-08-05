@@ -1,5 +1,5 @@
 {
-    "name": "hiotech/paysorta-php",
+    "name": "hiotech/paysortaphp",
     "description": "php package for paysorta",
     "type": "package",
      "keywords": [
@@ -12,7 +12,8 @@
         "paysorta",
         "paysorta.com"
     ],
-    "license": "mit",
+    "homepage": "https://github.com/hioweb003/paysorta-php.git",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Hiotech\\PaysortaPhp\\": "src/"
