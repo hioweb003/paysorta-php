@@ -15,9 +15,9 @@ class Client
 
     public function __construct(string $apiSecret, ?string $baseUrl = null)
     {
-        $baseUri = str_starts_with($apiSecret, 'sk_') ? getenv('PAYSORTA_BASE_URL')."".$baseUrl : getenv('PAYSORTA_TEST_BASE_URL')."".$baseUrl;
+        $baseUri = $baseUrl ?: (str_starts_with($apiSecret, 'sk_') ? getenv('PAYSORTA_BASE_URL') : getenv('PAYSORTA_TEST_BASE_URL'));
 
-        if ($baseUrl) {
+        if (! $baseUri) {
             throw new PaysortaException('Paysorta base URL is not set. Pass it explicitly or define PAYSORTA_BASE_URL.');
         }
 
