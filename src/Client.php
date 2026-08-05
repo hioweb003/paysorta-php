@@ -2,6 +2,7 @@
 
 namespace Hiotech\PaysortaPhp;
 
+use Dotenv\Dotenv;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
@@ -11,11 +12,18 @@ class Client
 {
     protected const DEFAULT_SDK_URL = 'https://sdk.paysorta.com';
 
+    protected static bool $envLoaded = false;
+
     protected HttpClient $http;
 
     public function __construct(string $apiSecret, ?string $baseUrl = null)
     {
-        $baseUri = $baseUrl ?: (str_starts_with($apiSecret, 'sk_') ? getenv('PAYSORTA_BASE_URL') : getenv('PAYSORTA_TEST_BASE_URL'));
+        if (! self::$envLoaded) {
+            Dotenv::createImmutable(getcwd())->safeLoad();
+            self::$envLoaded = true;
+        }
+
+        $baseUri = $baseUrl ?: (str_starts_with($apiSecret, 'sk_') ? self::env('PAYSORTA_BASE_URL') : self::env('PAYSORTA_TEST_BASE_URL'));
 
         if (! $baseUri) {
             throw new PaysortaException('Paysorta base URL is not set. Pass it explicitly or define PAYSORTA_BASE_URL.');
@@ -57,7 +65,22 @@ class Client
      */
     public static function getSdkUrl(): string
     {
-        return getenv('PAYSORTA_SDK_URL') ?: self::DEFAULT_SDK_URL;
+        return self::env('PAYSORTA_SDK_URL') ?: self::DEFAULT_SDK_URL;
+    }
+
+    /**
+     * phpdotenv v5 writes loaded values to $_ENV/$_SERVER, not the process
+     * environment, so getenv() alone won't see them.
+     */
+    protected static function env(string $key): ?string
+    {
+        $value = getenv($key);
+
+        if ($value !== false) {
+            return $value;
+        }
+
+        return $_ENV[$key] ?? $_SERVER[$key] ?? null;
     }
 
     protected function request(string $method, string $endpoint, array $options = []): array
